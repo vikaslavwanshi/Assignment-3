@@ -1,0 +1,4 @@
+# clair_config.yaml
+postgresql:
+  datasource: postgresql://vikaslavwanshi:Vikas066@postgres:5432/clair?sslmode=disable
+

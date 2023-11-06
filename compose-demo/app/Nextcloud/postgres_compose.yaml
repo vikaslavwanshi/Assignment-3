@@ -1,0 +1,29 @@
+   version: '3'
+   
+   services:
+     clair:
+       image: quay.io/coreos/clair:v4.2.1
+       platform: linux/amd64  # Specify the platform
+       ports:
+         - "6060:6060"
+       restart: always
+       depends_on:
+         - postgres
+       environment:
+         - CLAIR_DATABASE=postgresql://vikaslavwanshi:Vikas066@postgres:5432/clair?sslmode=disable
+         - CLAIR_UPDATER_ENABLED=true
+         - CLAIR_NOTIFIERS_ENABLED=true
+         - CLAIR_NOTIFIERS_ENDPOINT=http://clair-notifier:6061/notify
+         - CLAIR_API_MAXCONN=1024
+         - CLAIR_CONF=/config/config.yaml
+       volumes:
+         - ./clair_config.yaml:/config/config.yaml
+   
+     postgres:
+       image: postgres:12
+       environment:
+         - POSTGRES_USER=vikaslavwanshi
+         - POSTGRES_PASSWORD=Vikas066
+       volumes:
+         - /var/lib/postgresql/data
+        
